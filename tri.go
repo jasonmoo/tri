@@ -27,7 +27,9 @@ func (t *Trier) Try() bool {
 }
 
 func (t *Trier) Wait() {
-	n := math.Min(t.attempts, AttemptCeiling)
-	n = float64(int(1)<<uint(n)) - (n * 0.5) + (rand.Float64() * n)
-	time.Sleep(time.Duration(float64(time.Second) * n))
+	if t.attempts < t.tries {
+		n := math.Min(t.attempts, AttemptCeiling)
+		n = float64(int(1)<<uint(n)) - (n * 0.5) + (rand.Float64() * n)
+		time.Sleep(time.Duration(float64(time.Second) * n))
+	}
 }

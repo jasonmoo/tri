@@ -22,8 +22,10 @@ class Trier {
     // 4  ->  8~24
     // 5  ->  16~48
     public function Wait() {
-        $n = min($this->attempts, self::AttemptCeiling);
-        usleep(1000000 * (((1<<$n) - ($n*0.5)) + ((mt_rand()/mt_getrandmax())*$n)));
+        if ($this->attempts < $this->tries) {
+            $n = min($this->attempts, self::AttemptCeiling);
+            usleep(1000000 * (((1<<$n) - ($n*0.5)) + ((mt_rand()/mt_getrandmax())*$n)));
+        }
     }
 }
 
